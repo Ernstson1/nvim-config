@@ -6,3 +6,6 @@ vim.opt.autowrite = true -- Enable auto write
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+
+-- Remove relative row numbers
+vim.opt.relativenumber = false

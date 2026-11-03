@@ -23,7 +23,7 @@ LazyVim-based Neovim config (from the LazyVim starter template).
 - Inside Neovim: `:Lazy` (plugins), `:LazyExtras` (toggle extras), `:Mason` (tools), `:checkhealth`, `:ConformInfo` (formatters for current buffer)
 
 ## Linux setup
-`install.sh` sets up a fresh Linux machine (apt/dnf/pacman): system packages (node, python, JDK, C compiler, ripgrep), latest Neovim and lazygit from GitHub releases, .NET LTS in `~/.dotnet`, JetBrainsMono Nerd Font (desktops only), a PATH block in `~/.bashrc`/`~/.zshrc`, symlinks the repo to `~/.config/nvim`, then `Lazy! restore`. Mason tools and treesitter parsers install on first launch. Test changes to it in a container: `docker run --rm -it -v "$PWD":/src:ro ubuntu:24.04` (copy `/src` elsewhere first, since the script symlinks the repo).
+`install.sh` sets up a fresh Linux machine (apt/dnf/pacman) and is safe to re-run (finished downloads are skipped): system packages (node, python, JDK, C compiler, ripgrep, clangd), latest Neovim (linked into `/usr/local/bin` so a distro nvim can't shadow it) and lazygit from GitHub releases, .NET LTS in `~/.dotnet`, JetBrainsMono Nerd Font (desktops only), a PATH block in `~/.bashrc`/`~/.zshrc`, symlinks the repo to `~/.config/nvim`, then `Lazy! restore`. Mason tools and treesitter parsers install on first launch. Test changes to it in a container: `docker run --rm -it -v "$PWD":/src:ro ubuntu:24.04` (copy `/src` elsewhere first, since the script symlinks the repo).
 
 ## How it fits together
 - `init.lua` → `lua/config/lazy.lua` bootstraps lazy.nvim, imports `lazyvim.plugins`, then every file in `lua/plugins/`. Each file returns a spec (or list of specs) that is merged into LazyVim's spec for the same plugin.

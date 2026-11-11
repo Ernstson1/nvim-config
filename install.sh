@@ -38,15 +38,15 @@ latest_tag() { # GitHub redirects /releases/latest to /releases/tag/<tag>; avoid
 }
 
 step "System packages"
-# Mason needs node (npm), python (pypi), unzip and a JDK; nvim-treesitter needs a C compiler, curl and tar.
+# Mason needs node (npm), python (pypi) and unzip; jdtls needs JDK 25+; nvim-treesitter needs a C compiler, curl and tar.
 # clangd comes from the distro because Mason has no Linux arm64 build of it.
 if command -v apt-get >/dev/null; then
   $sudo apt-get update
   $sudo apt-get install -y git curl tar gzip xz-utils unzip build-essential ripgrep \
-    python3 python3-venv python3-pip nodejs npm default-jdk-headless libicu-dev clangd
+    python3 python3-venv python3-pip nodejs npm openjdk-25-jdk-headless libicu-dev clangd
 elif command -v dnf >/dev/null; then
   $sudo dnf install -y git curl tar gzip xz unzip gcc gcc-c++ make ripgrep \
-    python3 python3-pip nodejs npm java-latest-openjdk-devel libicu clang-tools-extra
+    python3 python3-pip nodejs npm java-25-openjdk-devel libicu clang-tools-extra
 elif command -v pacman >/dev/null; then
   $sudo pacman -Syu --needed --noconfirm git curl tar gzip xz unzip base-devel ripgrep \
     python python-pip nodejs npm jdk-openjdk icu clang

@@ -26,7 +26,7 @@ Afterwards, open a new shell. On a desktop, set your terminal font to *JetBrains
 
 ```bash
 brew install neovim lazygit ripgrep node python dotnet
-brew install --cask font-jetbrains-mono-nerd-font
+brew install --cask font-jetbrains-mono-nerd-font temurin@25
 git clone https://github.com/Ernstson1/nvim-config.git ~/.config/nvim
 ```
 

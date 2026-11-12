@@ -7,7 +7,7 @@ LazyVim-based Neovim config (from the LazyVim starter template).
 ## My setup
 - macOS, Ghostty terminal, Swedish keyboard layout
 - Ghostty uses `macos-option-as-alt = left`, so Alt bindings use left Option
-- Languages I use: C/C++ (CMake), Python, C#, Markdown
+- Languages I use: C/C++ (CMake), Python, C#, Java, JavaScript, Markdown
 
 ## Rules
 - One file per topic in `lua/plugins/` (e.g. `cmake.lua`, `csharp.lua`)
@@ -34,7 +34,8 @@ LazyVim-based Neovim config (from the LazyVim starter template).
 - Neo-tree comes from the `neo-tree` extra, which also owns `<leader>e`/`<leader>E`/`<leader>fe`/`<leader>fE`.
 - C# LSP is omnisharp from the `dotnet` extra. `easy-dotnet.nvim` (in `csharp.lua`) has its own Roslyn LSP disabled to avoid running two servers; its test-file keymaps are moved under `<leader>T`.
 - Java: jdtls from the `java` extra. Recent jdtls needs JDK 25+ as the default `java` (or `$JAVA_HOME`); with an older JDK it exits with code 13. JUnit runs through nvim-dap (`dap.core` extra), which makes the java extra install `java-debug-adapter`/`java-test` and add `<leader>tt`/`<leader>tr`/`<leader>tT` in Java buffers. Don't enable the `test.core` (neotest) extra for Java; LazyVim's java test keymaps don't use it.
-- Markdown formatting is prettier (`formatting.prettier` extra) with `--prose-wrap always` set in `lua/plugins/markdown.lua`.
+- Markdown formatting is prettier (`formatting.prettier` extra) with `--prose-wrap always` set in `lua/plugins/markdown.lua`. Prettier reads a project's `.prettierrc`, but that CLI flag overrides its `proseWrap`.
+- JavaScript/TypeScript: vtsls from the `lang.typescript` extra, ESLint LSP from the `linting.eslint` extra (only attaches in projects with an ESLint config, and fixes on save). Formatting is prettier.
 
 ## Making changes
 Look up what LazyVim already does before writing anything. Installed source (matches the version actually running):

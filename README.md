@@ -1,6 +1,6 @@
 # nvim-config
 
-My Neovim setup, built on [LazyVim](https://github.com/LazyVim/LazyVim). Tuned for C/C++ (CMake), Python, C# and Markdown.
+My Neovim setup, built on [LazyVim](https://github.com/LazyVim/LazyVim). Tuned for C/C++ (CMake), Python, C#, Java, JavaScript/TypeScript and Markdown.
 
 ## Install
 
@@ -37,6 +37,7 @@ git clone https://github.com/Ernstson1/nvim-config.git ~/.config/nvim
 - Plugin versions are pinned in `lazy-lock.json`.
 - Custom settings live in `lua/plugins/`, with one file per topic.
 - C#: OmniSharp, plus [easy-dotnet.nvim](https://github.com/GustavEikaas/easy-dotnet.nvim) for build, run and tests. Test keymaps are under `<leader>T`.
+- JavaScript/TypeScript: vtsls, ESLint (in projects that have a config) and Prettier, which follows the project's `.prettierrc`.
 - Markdown: Prettier wraps lines at 80 columns when you save.
 - The arrow keys are disabled in normal and visual mode. Use `hjkl`.
 

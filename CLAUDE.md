@@ -19,11 +19,11 @@ LazyVim-based Neovim config (from the LazyVim starter template).
 
 ## Commands
 - Format Lua: `stylua .` (config in `stylua.toml`: 2 spaces, 120 cols)
-- Check the config loads without errors: `nvim --headless "+Lazy! sync" +qa`
+- Check the config loads without errors: `nvim --headless "+Lazy! install" +qa`. Avoid `Lazy! sync` for this: it also updates every plugin and rewrites `lazy-lock.json`.
 - Inside Neovim: `:Lazy` (plugins), `:LazyExtras` (toggle extras), `:Mason` (tools), `:checkhealth`, `:ConformInfo` (formatters for current buffer)
 
 ## Linux setup
-`install.sh` sets up a fresh Linux machine (apt/dnf/pacman) and is safe to re-run (finished downloads are skipped): system packages (node, python, JDK, C compiler, ripgrep, clangd), latest Neovim (linked into `/usr/local/bin` so a distro nvim can't shadow it) and lazygit from GitHub releases, .NET LTS in `~/.dotnet`, JetBrainsMono Nerd Font (desktops only), a PATH block in `~/.bashrc`/`~/.zshrc`, symlinks the repo to `~/.config/nvim`, then `Lazy! restore`. Mason tools and treesitter parsers install on first launch. Test changes to it in a container: `docker run --rm -it -v "$PWD":/src:ro ubuntu:24.04` (copy `/src` elsewhere first, since the script symlinks the repo).
+`install.sh` sets up a fresh Linux machine (apt/dnf/pacman) and is safe to re-run (finished downloads are skipped): system packages (node, python, JDK, C compiler, ripgrep, clangd), latest Neovim (linked into `/usr/local/bin` so a distro nvim can't shadow it) and lazygit from GitHub releases, .NET LTS in `~/.dotnet`, JetBrainsMono Nerd Font (desktops only), a PATH block in `~/.bashrc`/`~/.zshrc`, symlinks the repo to `~/.config/nvim`, then `Lazy! restore`, and finally installs the Mason tools and treesitter parsers headless so the first launch is ready. If `nvim` was run in a shell before the script, that shell keeps the old binary cached; `hash -r` or a new shell fixes it. Test changes to it in a container: `docker run --rm -it -v "$PWD":/src:ro ubuntu:24.04` (copy `/src` elsewhere first, since the script symlinks the repo).
 
 ## How it fits together
 - `init.lua` → `lua/config/lazy.lua` bootstraps lazy.nvim, imports `lazyvim.plugins`, then every file in `lua/plugins/`. Each file returns a spec (or list of specs) that is merged into LazyVim's spec for the same plugin.
@@ -34,6 +34,9 @@ LazyVim-based Neovim config (from the LazyVim starter template).
 - Neo-tree comes from the `neo-tree` extra, which also owns `<leader>e`/`<leader>E`/`<leader>fe`/`<leader>fE`.
 - C# LSP is omnisharp from the `dotnet` extra. `easy-dotnet.nvim` (in `csharp.lua`) has its own Roslyn LSP disabled to avoid running two servers; its test-file keymaps are moved under `<leader>T`.
 - Java: jdtls from the `java` extra. Recent jdtls needs JDK 25+ as the default `java` (or `$JAVA_HOME`); with an older JDK it exits with code 13. JUnit runs through nvim-dap (`dap.core` extra), which makes the java extra install `java-debug-adapter`/`java-test` and add `<leader>tt`/`<leader>tr`/`<leader>tT` in Java buffers. Don't enable the `test.core` (neotest) extra for Java; LazyVim's java test keymaps don't use it.
+  - Formatting is jdtls itself (conform's LSP fallback; settings in `lua/plugins/java.lua`). If jdtls isn't running there's no completion and no formatting.
+  - jdtls startup errors are not in `lsp.log` but in `~/.cache/nvim/jdtls/<project>/config/*.log` (e.g. `osgi.ee ... version=25` means the JDK is too old).
+  - macOS: Homebrew's `openjdk@25` only becomes the default `java` after linking it into `/Library/Java/JavaVirtualMachines` (`sudo ln -sfn "$(brew --prefix openjdk@25)/libexec/openjdk.jdk" /Library/Java/JavaVirtualMachines/openjdk-25.jdk`). Projects targeting older Java still build via Gradle toolchains.
 - Markdown formatting is prettier (`formatting.prettier` extra) with `--prose-wrap always` set in `lua/plugins/markdown.lua`. Prettier reads a project's `.prettierrc`, but that CLI flag overrides its `proseWrap`.
 - JavaScript/TypeScript: vtsls from the `lang.typescript` extra, ESLint LSP from the `linting.eslint` extra (only attaches in projects with an ESLint config, and fixes on save). Formatting is prettier.
 

@@ -8,8 +8,5 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
--- Remove relative row numbers
-vim.opt.relativenumber = false
-
 -- Soft-wrap long lines instead of scrolling sideways (LazyVim already sets linebreak, so wraps happen at word boundaries)
 vim.opt.wrap = true
